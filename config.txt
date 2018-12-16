@@ -1,0 +1,5 @@
+smtp.gmail.com
+465
+<your username here>
+<your password here>
+http://www3.septa.org/hackathon/TrainView
