@@ -42,6 +42,7 @@ def main():
 					#this train is one we're looking to check
 					trainToCheck['found'] = True
 					updateStatus(train, trainToCheck)
+					break
 			if trainToCheck['found'] == False:
 				logging.getLogger('logger').warning('Could not find status for train ' + trainToCheck['trainNum'])
 				trainNotFound(trainToCheck)
