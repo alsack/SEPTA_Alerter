@@ -35,19 +35,16 @@ def main():
 		#get the status from SEPTA
 		septaStatus = requests.get(septaUrl).json()
 
-		#check each train from SEPTA and see if anyone wants status for it
-		for train in septaStatus:
-			for trainToCheck in trainsToCheck:
+		#evaluate status from SEPTA response
+		for trainToCheck in trainsToCheck:
+			for train in septaStatus:
 				if train['trainno'] == trainToCheck['trainNum']:
 					#this train is one we're looking to check
 					trainToCheck['found'] = True
 					updateStatus(train, trainToCheck)
-		
-		for trainToCheck in trainsToCheck:
 			if trainToCheck['found'] == False:
 				logging.getLogger('logger').warning('Could not find status for train ' + trainToCheck['trainNum'])
 				trainNotFound(trainToCheck)
-
 		
 	except:
 		logging.getLogger('logger').exception("Unexpected Exception")
@@ -143,6 +140,8 @@ def updateStatus(train, trainToCheck):
 		threshold = trainToCheck['threshold']
 		if isInt(threshold) and late >= int(threshold):
 			sendTrainLateEmail(trainToCheck, late)
+		else:
+			logging.getLogger('logger').info('Train ' + trainToCheck['trainNum'] + ' does not exceed threshold (' + threshold + ').'
 
 	#if the train is no longer late, delete the status file
 	if late == 0:
