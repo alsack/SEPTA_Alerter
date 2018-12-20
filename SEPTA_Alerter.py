@@ -105,7 +105,7 @@ def removeStatusFile(trainToCheck):
 	#remove status file if it exists
 	statusFileName = getStatusFileName(trainToCheck)
 	if os.path.exists(statusFileName):
-		os.remove(statusFileName)
+		removeStatusFile(trainToCheck)
 
 def updateStatus(train, trainToCheck):
 	late = train['late']
@@ -130,7 +130,7 @@ def updateStatus(train, trainToCheck):
 				sendTrainLateEmail(trainToCheck, late)
 		else:
 			#delete the status file, log error. send a message to the client
-			os.remove(statusFile)
+			removeStatusFile(trainToCheck)
 			logging.getLogger('logger').error('File ' + statusFIleName + ' had invalid status "' + lastLate + '"')
 			sendTrainLateEmail(trainToCheck, late)
 
@@ -146,7 +146,7 @@ def updateStatus(train, trainToCheck):
 
 	#if the train is no longer late, delete the status file
 	if late == 0:
-		os.remove(statusFileName)
+		removeStatusFile(trainToCheck)
 
 def getStatusFileName(trainToCheck):
 	return trainToCheck['trainNum'] + '.' + trainToCheck['email'] + '.status'
