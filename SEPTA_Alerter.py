@@ -128,7 +128,7 @@ def updateStatus(train, trainToCheck):
       sendTrainLateEmail(trainToCheck, late)
     else:
       logging.getLogger('logger').info('Train ' + trainToCheck['trainNum'] + 
-      ' late (' + late + ') does not exceed threshold (' + threshold + ') for ' +
+      ' late (' + str(late) + ') does not exceed threshold (' + threshold + ') for ' +
       trainToCheck['email'] + '.')
 
   #if the train is no longer late, delete the status file
